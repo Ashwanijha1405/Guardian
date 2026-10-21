@@ -36,7 +36,7 @@ Verification requests are kept in memory only and are lost on restart. Alerts ar
 | `notify_family` | `{ summary: string, severity: "info" \| "warning" \| "critical", typology?: string, score?: number }` | Event id. The event is stored in memory and appended to `data/events.json`. Summaries only, never transcripts. |
 | `get_household_context` | `{}` | Persona and trusted contacts, with no secrets. |
 | `verify_with_family` | `{ reason: string (one-line summary, max 280, never a transcript), claimed_person?: string, typology?: string, locale? }` | `{ request_id, contact_name, status: "pending", say }`. Creates a verification request for the household's primary trusted contact and pushes it live to the family dashboard: out-of-band verification through a known channel, as the FBI advises. |
-| `check_verification` | `{ request_id: string, locale? }` | `{ request_id, contact_name, status, say }`. Status is `pending`, `confirmed_safe`, `needs_help`, or `no_response` (still pending after `VERIFICATION_TIMEOUT_MS`). `say` is a ready-to-speak line in romanized Hindi or English. |
+| `check_verification` | `{ request_id: string, locale? }` | `{ request_id, contact_name, status, say }`. Status is `pending`, `confirmed_safe`, `needs_help`, or `no_response` (still pending after `VERIFICATION_TIMEOUT_MS`, default 90000 ms). `say` is a ready-to-speak line in romanized Hindi or English. |
 
 ## Server instructions
 
