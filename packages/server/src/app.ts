@@ -2,6 +2,7 @@ import { createMcpExpressApp } from "@modelcontextprotocol/express";
 import { NodeStreamableHTTPServerTransport } from "@modelcontextprotocol/node";
 import cors from "cors";
 import type { Express } from "express";
+import { familyRoutes } from "./familyRoutes.js";
 import { createGuardianServer } from "./server.js";
 
 export interface AppOptions {
@@ -16,6 +17,7 @@ export function createApp({ host, corsOrigin }: AppOptions): Express {
   app.get("/health", (_req, res) => {
     res.json({ ok: true, name: "guardian" });
   });
+  app.use(familyRoutes());
 
   // Stateless: a fresh server + transport per request, so there is no session state to lose on restart.
   app.post("/mcp", async (req, res) => {

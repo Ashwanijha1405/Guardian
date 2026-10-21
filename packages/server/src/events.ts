@@ -1,5 +1,6 @@
 import { randomUUID } from "node:crypto";
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
+import { publish } from "./bus.js";
 import { DATA_DIR } from "./data.js";
 
 export type Severity = "info" | "warning" | "critical";
@@ -22,6 +23,7 @@ export function addEvent(input: Omit<FamilyEvent, "id" | "createdAt">): FamilyEv
   const event: FamilyEvent = { id: randomUUID(), createdAt: new Date().toISOString(), ...input };
   events.push(event);
   writeFileSync(EVENTS_FILE, JSON.stringify(events, null, 2));
+  publish({ type: "alert", event });
   return event;
 }
 

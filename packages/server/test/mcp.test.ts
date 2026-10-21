@@ -31,13 +31,15 @@ describe("guardian MCP server over Streamable HTTP", () => {
     expect(client.getInstructions()).toMatch(/assess_scam_risk first/);
   });
 
-  it("lists the four tools", async () => {
+  it("lists the six tools", async () => {
     const { tools } = await client.listTools();
     expect(tools.map((t) => t.name).sort()).toEqual([
       "assess_scam_risk",
+      "check_verification",
       "get_household_context",
       "get_safety_guidance",
       "notify_family",
+      "verify_with_family",
     ]);
   });
 
