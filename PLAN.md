@@ -33,7 +33,7 @@ Oct 23 noon, record the demo using MCP Inspector + dashboard instead of the simu
 3. In Claude Code, install the MCP Apps skills:
    ```
    /plugin marketplace add modelcontextprotocol/ext-apps
-   /plugin install mcp-apps@modelcontextprotocol-ext-apps
+   /plugin install mcp-apps@mcp-apps
    ```
 4. Get an LLM API key for the simulator (Gemini from Google AI Studio is simplest; check its free-tier
    limits on your account). Put it in `.env` later — never commit it.
