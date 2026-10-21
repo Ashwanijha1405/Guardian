@@ -1,0 +1,245 @@
+{
+  "typologies": {
+    "digital_arrest": {
+      "facts": [
+        {
+          "id": "digital_arrest_not_a_law",
+          "en": "There is no such thing as a \"digital arrest\" in Indian law, and real police, CBI or ED officers never question or arrest anyone over a video call.",
+          "hi": "भारतीय कानून में \"डिजिटल अरेस्ट\" जैसी कोई चीज़ नहीं है, और असली पुलिस, सीबीआई या ईडी कभी वीडियो कॉल पर पूछताछ या गिरफ्तारी नहीं करते।",
+          "source": "https://i4c.mha.gov.in",
+          "verified": false
+        },
+        {
+          "id": "digital_arrest_no_secret_payment",
+          "en": "A government officer will never ask you to pay money or keep a case secret to prove you are innocent.",
+          "hi": "कोई सरकारी अधिकारी आपसे पैसे नहीं माँगेगा और न ही यह कहेगा कि बेगुनाह साबित करने के लिए मामला गुप्त रखें।",
+          "source": "https://pib.gov.in",
+          "verified": false
+        },
+        {
+          "id": "digital_arrest_report_1930",
+          "en": "If a video call turns into a demand for money, hang up and report it on the cybercrime helpline 1930 or at cybercrime.gov.in.",
+          "hi": "अगर वीडियो कॉल में पैसे माँगे जाएँ, तो फोन काट दें और साइबर हेल्पलाइन 1930 या cybercrime.gov.in पर शिकायत दर्ज करें।",
+          "source": "https://cybercrime.gov.in",
+          "verified": true
+        }
+      ],
+      "nextSteps": [
+        {
+          "en": "End the call now. You do not have to keep talking.",
+          "hi": "अभी कॉल बंद कर दें। आपको बात जारी रखने की ज़रूरत नहीं है।"
+        },
+        {
+          "en": "Do not pay anything and do not share any OTP, PIN or bank details.",
+          "hi": "कोई पैसा न दें और न ही ओटीपी, पिन या बैंक की जानकारी साझा करें।"
+        },
+        {
+          "en": "Call Rahul or another family member, then call 1930.",
+          "hi": "राहुल या परिवार के किसी सदस्य को फोन करें, फिर 1930 पर कॉल करें।"
+        }
+      ]
+    },
+    "fake_rbi_safe_account": {
+      "facts": [
+        {
+          "id": "rbi_no_safe_account",
+          "en": "The RBI does not hold money for individual people and never asks you to move your savings into a \"safe account\".",
+          "hi": "आरबीआई किसी व्यक्ति के पैसे अपने पास नहीं रखता और कभी नहीं कहता कि अपनी बचत किसी \"सुरक्षित खाते\" में डाल दें।",
+          "source": "https://www.rbi.org.in",
+          "verified": false
+        },
+        {
+          "id": "rbi_never_asks_otp",
+          "en": "No bank or RBI officer will ask for your OTP, PIN or password, or tell you to transfer money to keep it safe.",
+          "hi": "कोई भी बैंक या आरबीआई अधिकारी आपसे ओटीपी, पिन या पासवर्ड नहीं माँगेगा, और न ही पैसे सुरक्षित रखने के लिए दूसरे खाते में भेजने को कहेगा।",
+          "source": "https://sachet.rbi.org.in",
+          "verified": false
+        },
+        {
+          "id": "rbi_frozen_account_scam",
+          "en": "If someone says your account is frozen and you must transfer money to unfreeze it, that is a scam.",
+          "hi": "अगर कोई कहे कि आपका खाता बंद है और उसे खोलने के लिए पैसे भेजने पड़ेंगे, तो वह धोखाधड़ी है।",
+          "source": "https://www.rbi.org.in",
+          "verified": false
+        }
+      ],
+      "nextSteps": [
+        {
+          "en": "Do not move any money. There is no \"safe account\".",
+          "hi": "कोई पैसा मत भेजिए। \"सुरक्षित खाता\" जैसा कुछ नहीं होता।"
+        },
+        {
+          "en": "Hang up and call your bank on the number printed on your card or passbook.",
+          "hi": "फोन काटें और अपने बैंक को कार्ड या पासबुक पर छपे नंबर पर कॉल करें।"
+        },
+        {
+          "en": "Tell Rahul, and report at 1930 or cybercrime.gov.in.",
+          "hi": "राहुल को बताएँ, और 1930 या cybercrime.gov.in पर शिकायत करें।"
+        }
+      ]
+    },
+    "courier_narcotics": {
+      "facts": [
+        {
+          "id": "courier_no_fine_calls",
+          "en": "Courier companies and customs officers do not call people to demand a fine for a parcel that contains drugs.",
+          "hi": "कूरियर कंपनियाँ और सीमा शुल्क अधिकारी किसी को फोन करके यह नहीं कहते कि आपके पार्सल में ड्रग्स मिले हैं और जुर्माना देना पड़ेगा।",
+          "source": "https://cybercrime.gov.in",
+          "verified": false
+        },
+        {
+          "id": "courier_report_fake_call",
+          "en": "You can report a fake parcel or courier call on the cybercrime helpline 1930 or at cybercrime.gov.in.",
+          "hi": "नकली पार्सल या कूरियर कॉल की शिकायत आप साइबर हेल्पलाइन 1930 या cybercrime.gov.in पर कर सकते हैं।",
+          "source": "https://cybercrime.gov.in",
+          "verified": true
+        },
+        {
+          "id": "courier_no_upi_payment",
+          "en": "Customs and police never ask for payment by video call, UPI or gift card to release a parcel.",
+          "hi": "सीमा शुल्क विभाग और पुलिस पार्सल छुड़ाने के लिए वीडियो कॉल, यूपीआई या गिफ्ट कार्ड से पैसे नहीं माँगते।",
+          "source": "https://cybercrime.gov.in",
+          "verified": false
+        }
+      ],
+      "nextSteps": [
+        {
+          "en": "Hang up. Do not pay any fine or \"clearance fee\".",
+          "hi": "फोन काट दें। कोई जुर्माना या \"क्लीयरेंस फीस\" न दें।"
+        },
+        {
+          "en": "Do not share your Aadhaar, bank or address details.",
+          "hi": "अपना आधार, बैंक या पते की जानकारी साझा न करें।"
+        },
+        {
+          "en": "Call Rahul and report at 1930.",
+          "hi": "राहुल को फोन करें और 1930 पर शिकायत करें।"
+        }
+      ]
+    },
+    "grandparent_voice_clone": {
+      "facts": [
+        {
+          "id": "voice_clone_ai_possible",
+          "en": "Scammers can use AI to copy a family member's voice and sound exactly like them.",
+          "hi": "ठग एआई की मदद से परिवार के किसी सदस्य की आवाज़ की नकल कर सकते हैं और बिल्कुल उन्हीं जैसे सुनाई दे सकते हैं।",
+          "source": "https://consumer.ftc.gov",
+          "verified": false
+        },
+        {
+          "id": "voice_clone_call_back",
+          "en": "If a call sounds like a grandchild in trouble, hang up and call that person back on a number you already know.",
+          "hi": "अगर फोन पर पोता या पोती मुसीबत में होने जैसा लगे, तो फोन काटें और उसी व्यक्ति को उनके पुराने, जाने-पहचाने नंबर पर वापस कॉल करें।",
+          "source": "https://www.fbi.gov",
+          "verified": false
+        },
+        {
+          "id": "voice_clone_family_code",
+          "en": "Agree a family code word that only your family knows, and ask for it on any urgent call.",
+          "hi": "परिवार में एक गुप्त कोड शब्द तय करें जो सिर्फ़ आपके परिवार को पता हो, और किसी भी ज़रूरी कॉल पर वह कोड शब्द पूछें।",
+          "source": "https://www.fbi.gov",
+          "verified": false
+        },
+        {
+          "id": "voice_clone_report_ic3",
+          "en": "You can report a voice-clone scam at ic3.gov.",
+          "hi": "आवाज़ की नकल वाली ठगी की शिकायत आप ic3.gov पर कर सकते हैं।",
+          "source": "https://www.ic3.gov",
+          "verified": true
+        }
+      ],
+      "nextSteps": [
+        {
+          "en": "Hang up, even if the voice sounds real.",
+          "hi": "फोन काट दें, चाहे आवाज़ कितनी भी असली लगे।"
+        },
+        {
+          "en": "Call Rahul back on his saved number and ask for the family code word.",
+          "hi": "राहुल को उनके सेव किए नंबर पर फोन करें और पारिवारिक कोड शब्द पूछें।"
+        },
+        {
+          "en": "Do not send money or gift cards. Report at ic3.gov.",
+          "hi": "पैसे या गिफ्ट कार्ड न भेजें। ic3.gov पर शिकायत करें।"
+        }
+      ]
+    },
+    "government_impersonation_us": {
+      "facts": [
+        {
+          "id": "irs_no_phone_payment",
+          "en": "The IRS does not call to demand immediate payment, gift cards or wire transfers, and does not threaten arrest.",
+          "hi": "आईआरएस फोन करके तुरंत पैसे, गिफ्ट कार्ड या बैंक ट्रांसफर नहीं माँगता, और गिरफ्तारी की धमकी नहीं देता।",
+          "source": "https://www.irs.gov",
+          "verified": false
+        },
+        {
+          "id": "irs_report_tax_scam",
+          "en": "The IRS says you can report a tax scam, fraud or identity theft to the IRS.",
+          "hi": "आईआरएस कहता है कि टैक्स ठगी, धोखाधड़ी या पहचान चोरी की शिकायत आप आईआरएस को कर सकते हैं।",
+          "source": "https://www.irs.gov",
+          "verified": true
+        },
+        {
+          "id": "us_report_government_fraud",
+          "en": "You can report government-impersonation fraud at reportfraud.ftc.gov or ic3.gov.",
+          "hi": "सरकारी अधिकारी बनकर की गई ठगी की शिकायत आप reportfraud.ftc.gov या ic3.gov पर कर सकते हैं।",
+          "source": "https://reportfraud.ftc.gov",
+          "verified": true
+        }
+      ],
+      "nextSteps": [
+        {
+          "en": "Hang up. The IRS and police do not demand payment by phone.",
+          "hi": "फोन काट दें। आईआरएस और पुलिस फोन पर पैसे नहीं माँगते।"
+        },
+        {
+          "en": "Do not buy gift cards or send money.",
+          "hi": "गिफ्ट कार्ड न खरीदें और पैसे न भेजें।"
+        },
+        {
+          "en": "Call Rahul, then report at reportfraud.ftc.gov.",
+          "hi": "राहुल को फोन करें, फिर reportfraud.ftc.gov पर शिकायत करें।"
+        }
+      ]
+    }
+  },
+  "general": {
+    "facts": [
+      {
+        "id": "general_never_share_otp",
+        "en": "Never share your OTP, PIN or password with anyone, even someone who says they are from the bank.",
+        "hi": "अपना ओटीपी, पिन या पासवर्ड किसी से न साझा करें, चाहे वह खुद को बैंक से बताए।",
+        "source": "https://cybercrime.gov.in",
+        "verified": false
+      },
+      {
+        "id": "general_okay_to_hang_up",
+        "en": "It is okay to hang up on a call that feels wrong. You are not being rude.",
+        "hi": "जो कॉल ठीक न लगे उसे काट देना बिल्कुल ठीक है। इसमें कोई बुरी बात नहीं है।",
+        "source": "https://cybercrime.gov.in",
+        "verified": false
+      },
+      {
+        "id": "general_talk_before_paying",
+        "en": "Talk to a family member before you pay anyone or move money.",
+        "hi": "किसी को पैसे देने या पैसे भेजने से पहले परिवार के किसी सदस्य से बात करें।",
+        "source": "https://cybercrime.gov.in",
+        "verified": false
+      }
+    ],
+    "nextSteps": [
+      {
+        "en": "Hang up and take a slow breath.",
+        "hi": "फोन काटें और आराम से एक गहरी साँस लें।"
+      },
+      {
+        "en": "Call Rahul or another family member.",
+        "hi": "राहुल या परिवार के किसी सदस्य को फोन करें।"
+      },
+      {
+        "en": "Report at 1930 in India, or at ic3.gov in the US.",
+        "hi": "भारत में 1930 पर, या अमेरिका में ic3.gov पर शिकायत करें।"
+      }
+    ]
+  }
+}

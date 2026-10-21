@@ -1,0 +1,31 @@
+{
+  "persona": {
+    "id": "dadi",
+    "displayName": "Dadi",
+    "preferredLanguage": "hi-IN",
+    "languages": ["hi-IN", "en-IN"],
+    "city": "Lucknow",
+    "livesAlone": true
+  },
+  "trustedContacts": [
+    {
+      "id": "rahul",
+      "name": "Rahul",
+      "relationship": "grandson",
+      "relationshipHi": "पोता",
+      "city": "Bengaluru",
+      "phone": "+91-XXXXX-XXXXX",
+      "primary": true
+    },
+    {
+      "id": "priya",
+      "name": "Priya",
+      "relationship": "daughter-in-law",
+      "relationshipHi": "बहू",
+      "city": "Lucknow",
+      "phone": "+91-XXXXX-XXXXX",
+      "primary": false
+    }
+  ],
+  "locale": "hi-IN"
+}
