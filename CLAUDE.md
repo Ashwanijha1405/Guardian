@@ -61,3 +61,10 @@ Rahul's dashboard (served by the server) receives live events via SSE and can ta
 - Keep a running list of setup friction (confusing docs, errors, workarounds) in `docs/friction-log.md`
   — this earns a judging bonus. One entry per real problem: task, steps, expected vs actual, severity, workaround, suggestion.
 - If something in the plan is impossible or the API differs from the plan, stop, explain, and propose the smallest fix.
+
+## Learning mode (the user is a student who wants to understand every line)
+- Before writing code in a phase, give a 5-line plan of what you will build and why, then wait for me to say "go".
+- Keep functions small. Add a short comment only where the *why* is not obvious.
+- After finishing, give me: (1) the 3 most important files to read, (2) one thing in them that I should be able to
+  explain in a viva, (3) one question to test me. Do not skip this.
+- If I ask "explain", explain in Hinglish, line by line, with a sample input and a dry run.
