@@ -9,9 +9,10 @@ triggered it.
 import { assessRisk } from "@guardian/risk-engine";
 
 assessRisk({ text: "CBI officer video call pe hai, digital arrest bol raha hai, kisi ko batana mat" });
-// { score: 100, band: "critical", typology: "digital_arrest", recommendedAction: "end_call_now",
+// { score: 84, band: "critical", typology: "digital_arrest", recommendedAction: "end_call_now",
 //   flags: [{ id: "arrest_threat", evidence: "digital arrest", weight: 20, ... }, ...],
-//   explanation: 'Someone claiming to be "cbi" is threatening arrest, is asking you to keep it secret and ...' }
+//   explanation: 'Someone claiming to be "cbi" is threatening arrest, is asking you to keep it secret
+//                 and is questioning you on a video call.' }
 ```
 
 ## How it works
