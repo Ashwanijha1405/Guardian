@@ -1,7 +1,11 @@
 import { createMcpExpressApp } from "@modelcontextprotocol/express";
 import { NodeStreamableHTTPServerTransport } from "@modelcontextprotocol/node";
 import cors from "cors";
-import type { Express } from "express";
+import express, { type Express } from "express";
+import { fileURLToPath } from "node:url";
+
+// Static files sit beside src/ and dist/, so the same relative path works for tsx and the built server.
+const DASHBOARD_DIR = fileURLToPath(new URL("../dashboard/", import.meta.url));
 import { familyRoutes } from "./familyRoutes.js";
 import { createGuardianServer } from "./server.js";
 
@@ -18,6 +22,7 @@ export function createApp({ host, corsOrigin }: AppOptions): Express {
     res.json({ ok: true, name: "guardian" });
   });
   app.use(familyRoutes());
+  app.use("/dashboard", express.static(DASHBOARD_DIR));
 
   // Stateless: a fresh server + transport per request, so there is no session state to lose on restart.
   app.post("/mcp", async (req, res) => {

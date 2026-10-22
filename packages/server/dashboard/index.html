@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#f4efe8" />
+    <title>Guardian · Family</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="phone">
+      <header class="top">
+        <div>
+          <h1 class="brand">Guardian</h1>
+          <p class="brand-sub"><span lang="hi">गार्जियन</span> · Dadi's circle</p>
+        </div>
+        <div class="avatar" id="viewer-initial" aria-label="Signed in as Rahul">R</div>
+      </header>
+
+      <div id="status"></div>
+      <section id="next" hidden></section>
+
+      <section class="section" aria-labelledby="alerts-h">
+        <div class="section-head">
+          <h2 id="alerts-h">Alerts · <span lang="hi">अलर्ट</span></h2>
+          <span class="muted">Summaries only</span>
+        </div>
+        <ul class="list" id="alerts"></ul>
+      </section>
+
+      <section class="section" id="household-section" aria-labelledby="household-h">
+        <div class="section-head">
+          <h2 id="household-h">Household · <span lang="hi">परिवार</span></h2>
+        </div>
+        <ul class="list" id="household"></ul>
+      </section>
+
+      <p class="privacy">Guardian never records calls. You see summaries, not conversations.</p>
+    </main>
+
+    <nav class="preview" aria-label="Preview state (mock data)">
+      <span class="preview-label">Mock</span>
+      <button data-scenario="safe">All clear</button>
+      <button data-scenario="pending-da">Pending · arrest</button>
+      <button data-scenario="pending-gp">Pending · grandson</button>
+      <button data-scenario="confirmed">Confirmed</button>
+      <button data-scenario="help">Needs help</button>
+      <button data-scenario="noresponse">No response</button>
+    </nav>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+    <script src="mock.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
