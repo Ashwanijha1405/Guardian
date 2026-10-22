@@ -1,0 +1,40 @@
+/* Shared by both MCP Apps cards. Sized for an Echo Show (1280×800) and must still fit 800×480,
+   so type scales with the viewport instead of using fixed pixel sizes. */
+:root {
+  --bg: #f4efe8;
+  --ink: #1f1b17;
+  --muted: #6e665c;
+  --line: #e2dbd0;
+  --card: #fdfbf8;
+  --low: #1f6b4f;
+  --medium: #a15c00;
+  --high: #b5560f;
+  --critical: #b3261e;
+  --slate: #4a515b;
+  --font: system-ui, -apple-system, "Segoe UI", "Nirmala UI", "Noto Sans", "Noto Sans Devanagari",
+    "Kohinoor Devanagari", "Mangal", Roboto, sans-serif;
+  font-size: clamp(12px, 1.6vmin + 0.6vw, 22px);
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; height: 100%; }
+body { background: var(--bg); color: var(--ink); font-family: var(--font); -webkit-font-smoothing: antialiased; }
+p, h1, h2, ul { margin: 0; padding: 0; }
+ul { list-style: none; }
+
+.card { min-height: 100%; padding: 1.6rem 2rem; display: flex; gap: 2rem; }
+.waiting { align-items: center; justify-content: center; }
+.wait { color: var(--muted); font-size: 1.4rem; }
+
+.tone-low { --tone: var(--low); }
+.tone-medium { --tone: var(--medium); }
+.tone-high { --tone: var(--high); }
+.tone-critical { --tone: var(--critical); }
+.tone-slate { --tone: var(--slate); }
+
+.hi { font-weight: 600; }
+.muted { color: var(--muted); }
+
+@media (max-aspect-ratio: 1/1) {
+  .card { flex-direction: column; padding: 1.2rem; gap: 1.2rem; }
+}

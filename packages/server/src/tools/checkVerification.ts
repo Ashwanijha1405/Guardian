@@ -1,5 +1,7 @@
+import { registerAppTool } from "@modelcontextprotocol/ext-apps/server";
 import type { McpServer } from "@modelcontextprotocol/server";
 import { z } from "zod";
+import { VERIFIED_CARD_URI } from "../cards.js";
 import { household } from "../data.js";
 import { getVerification, type VerificationStatus } from "../verifications.js";
 import { localeSchema } from "./schemas.js";
@@ -24,7 +26,8 @@ const LINES: Record<VerificationStatus, { en: (name: string) => string; hi: (nam
 };
 
 export function registerCheckVerification(server: McpServer): void {
-  server.registerTool(
+  registerAppTool(
+    server,
     "check_verification",
     {
       title: "Check verification",
@@ -33,6 +36,7 @@ export function registerCheckVerification(server: McpServer): void {
         "needs_help, or no_response (no answer after 90 seconds). Speak `say` to the user as-is.",
       inputSchema: z.object({ request_id: z.string().min(1), locale: localeSchema }),
       annotations: { readOnlyHint: true, idempotentHint: true, openWorldHint: false },
+      _meta: { ui: { resourceUri: VERIFIED_CARD_URI } },
     },
     async ({ request_id, locale }) => {
       const req = getVerification(request_id);

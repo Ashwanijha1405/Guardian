@@ -1,11 +1,14 @@
 import { assessRisk, type Locale } from "@guardian/risk-engine";
+import { registerAppTool } from "@modelcontextprotocol/ext-apps/server";
 import type { McpServer } from "@modelcontextprotocol/server";
 import { z } from "zod";
+import { RISK_CARD_URI } from "../cards.js";
 import { household } from "../data.js";
 import { localeSchema, riskAssessmentSchema } from "./schemas.js";
 
 export function registerAssessScamRisk(server: McpServer): void {
-  server.registerTool(
+  registerAppTool(
+    server,
     "assess_scam_risk",
     {
       title: "Assess scam risk",
@@ -20,6 +23,7 @@ export function registerAssessScamRisk(server: McpServer): void {
       }),
       outputSchema: riskAssessmentSchema,
       annotations: { readOnlyHint: true, idempotentHint: true, openWorldHint: false },
+      _meta: { ui: { resourceUri: RISK_CARD_URI } },
     },
     async ({ situation, locale }) => {
       const result = assessRisk({ text: situation, locale: locale ?? (household.locale as Locale) });
