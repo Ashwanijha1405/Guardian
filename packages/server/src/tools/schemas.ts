@@ -19,7 +19,15 @@ export const riskAssessmentSchema = z.object({
   band: z.enum(["low", "medium", "high", "critical"]),
   typology: typologySchema,
   typologyConfidence: z.number(),
-  flags: z.array(z.object({ id: z.string(), label: z.string(), weight: z.number(), evidence: z.string() })),
+  flags: z.array(
+    z.object({
+      id: z.string(),
+      label: z.string(),
+      lesson: z.object({ en: z.string(), hi: z.string() }),
+      weight: z.number(),
+      evidence: z.string(),
+    }),
+  ),
   recommendedAction: z.enum(["reassure", "pause_and_verify", "end_call_now"]),
   explanation: z.string(),
 });

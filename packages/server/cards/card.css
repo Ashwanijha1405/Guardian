@@ -13,7 +13,7 @@
   --slate: #4a515b;
   --font: system-ui, -apple-system, "Segoe UI", "Nirmala UI", "Noto Sans", "Noto Sans Devanagari",
     "Kohinoor Devanagari", "Mangal", Roboto, sans-serif;
-  font-size: clamp(12px, 1.6vmin + 0.6vw, 22px);
+  font-size: clamp(15px, 2.4vmin + 0.8vw, 24px);
 }
 
 * { box-sizing: border-box; }

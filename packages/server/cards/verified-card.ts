@@ -1,35 +1,35 @@
 import { App } from "@modelcontextprotocol/ext-apps";
 import { esc } from "./shared.js";
 
+type Lang = "en" | "hi";
+
 interface Verification {
   contact_name: string;
   status: "pending" | "confirmed_safe" | "needs_help" | "no_response";
-  say: string;
 }
 
-const STATUS = {
-  pending: { tone: "slate", icon: "…", en: (n: string) => `Waiting for ${n}…`, hi: (n: string) => `${n} के जवाब का इंतज़ार…` },
-  confirmed_safe: { tone: "low", icon: "✓", en: (n: string) => `${n} confirmed: it's a scam`, hi: (n: string) => `${n} ने बताया: यह धोखा है` },
-  needs_help: { tone: "medium", icon: "!", en: (n: string) => `${n} asked for help`, hi: (n: string) => `${n} ने मदद माँगी है` },
-  no_response: { tone: "slate", icon: "☎", en: () => "No response — call 1930", hi: () => "जवाब नहीं आया — 1930 पर कॉल करें" },
+// One icon and one line per status, in the user's language: Dadi should get it at a glance.
+const STATUS: Record<Verification["status"], { tone: string; icon: string } & Record<Lang, (name: string) => string>> = {
+  pending: { tone: "slate", icon: "…", en: (n) => `Waiting for ${n}…`, hi: (n) => `${n} के जवाब का इंतज़ार…` },
+  confirmed_safe: { tone: "low", icon: "✓", en: (n) => `${n} says: it's a scam`, hi: (n) => `${n} ने बताया: यह धोखा है` },
+  needs_help: { tone: "medium", icon: "☎", en: (n) => `${n} will call you now`, hi: (n) => `${n} आपको अभी कॉल करेंगे` },
+  no_response: { tone: "slate", icon: "1930", en: () => "No answer yet. Call 1930.", hi: () => "जवाब नहीं आया। 1930 पर कॉल करें।" },
 };
 
 const CSS_STYLE = `
-.card { flex-direction: column; align-items: center; justify-content: center; text-align: center; gap: 1.2rem; }
+.card { flex-direction: column; align-items: center; justify-content: center; text-align: center; gap: 1.4rem; }
 .icon { width: 9rem; height: 9rem; border-radius: 50%; display: grid; place-items: center; background: var(--tone); color: #fff; font-size: 5rem; font-weight: 800; line-height: 1; }
-.line { font-size: 2.4rem; font-weight: 800; line-height: 1.15; max-width: 22ch; }
-.line .hi { display: block; font-size: 1.6rem; margin-top: .3rem; }
-.say { font-size: 1.15rem; color: var(--muted); max-width: 40ch; }
+.icon.small-text { font-size: 2.6rem; }
+.line { font-size: 2.2rem; font-weight: 800; line-height: 1.25; max-width: 18ch; text-wrap: balance; }
 `;
 
-function render(root: HTMLElement, v: Verification): void {
+function render(root: HTMLElement, v: Verification, lang: Lang): void {
   const s = STATUS[v.status];
-  const name = esc(v.contact_name);
+  root.lang = lang;
   root.className = `card tone-${s.tone}`;
   root.innerHTML = `
-    <div class="icon" aria-hidden="true">${s.icon}</div>
-    <h1 class="line">${s.en(name)}<span class="hi" lang="hi">${s.hi(name)}</span></h1>
-    <p class="say">${esc(v.say)}</p>`;
+    <div class="icon ${s.icon.length > 2 ? "small-text" : ""}" aria-hidden="true">${s.icon}</div>
+    <h1 class="line">${s[lang](esc(v.contact_name))}</h1>`;
 }
 
 const style = document.createElement("style");
@@ -37,8 +37,12 @@ style.textContent = CSS_STYLE;
 document.head.append(style);
 
 const root = document.getElementById("root")!;
+let lang: Lang = "hi";
 const app = new App({ name: "Guardian verification card", version: "0.1.0" });
+app.ontoolinput = ({ arguments: args }) => {
+  lang = String(args?.locale ?? "hi-IN").startsWith("en") ? "en" : "hi";
+};
 app.ontoolresult = (result) => {
-  if (result.structuredContent) render(root, result.structuredContent as unknown as Verification);
+  if (result.structuredContent) render(root, result.structuredContent as unknown as Verification, lang);
 };
 void app.connect();

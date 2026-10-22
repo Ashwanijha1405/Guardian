@@ -31,6 +31,8 @@ export interface RiskInput {
 export interface Flag {
   id: FlagId;
   label: string;
+  /** Plain-language reason this signal means danger, for teaching the user. */
+  lesson: { en: string; hi: string };
   weight: number;
   evidence: string;
 }

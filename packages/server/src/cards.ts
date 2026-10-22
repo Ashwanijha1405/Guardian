@@ -35,8 +35,10 @@ async function buildCard(entry: string, title: string): Promise<string> {
 }
 
 // Built once per process and shared, because the stateless server creates a new McpServer per request.
+// In development cards are rebuilt on every read so edits to cards/ show up without a restart.
 const cache = new Map<string, Promise<string>>();
 function cardHtml(entry: string, title: string): Promise<string> {
+  if (process.env.NODE_ENV !== "production") return buildCard(entry, title);
   if (!cache.has(entry)) cache.set(entry, buildCard(entry, title));
   return cache.get(entry)!;
 }

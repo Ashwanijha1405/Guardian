@@ -116,3 +116,14 @@ describe("assessment shape", () => {
     expect(listTypologies().map((t) => t.id)).toContain("digital_arrest");
   });
 });
+
+describe("teach-back lessons", () => {
+  it("gives every flag a lesson in English and Hindi", () => {
+    const r = assessRisk({ text: coreCases[0]!.text });
+    expect(r.flags.length).toBeGreaterThan(0);
+    for (const f of r.flags) {
+      expect(f.lesson.en.length).toBeGreaterThan(20);
+      expect(f.lesson.hi).toMatch(/[ऀ-ॿ]/);
+    }
+  });
+});

@@ -26,10 +26,14 @@ export function registerAssessScamRisk(server: McpServer): void {
       _meta: { ui: { resourceUri: RISK_CARD_URI } },
     },
     async ({ situation, locale }) => {
-      const result = assessRisk({ text: situation, locale: locale ?? (household.locale as Locale) });
+      const userLocale = locale ?? (household.locale as Locale);
+      const result = assessRisk({ text: situation, locale: userLocale });
+      // The strongest flag's lesson, in the user's language, so the assistant can teach one thing in its reply.
+      const lesson = result.flags[0]?.lesson[userLocale.startsWith("hi") ? "hi" : "en"];
       const text =
         `Risk ${result.score}/100 (${result.band}), pattern: ${result.typology}. ` +
-        `${result.explanation} Recommended: ${result.recommendedAction}.`;
+        `${result.explanation} Recommended: ${result.recommendedAction}.` +
+        (lesson && result.band !== "low" ? ` One thing to tell the user: ${lesson}` : "");
       return { content: [{ type: "text", text }], structuredContent: result };
     },
   );

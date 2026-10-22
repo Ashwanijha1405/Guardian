@@ -38,7 +38,7 @@ function detectFlags(text: string): Flag[] {
   const flags: Flag[] = [];
   for (const { flag, regexes } of compiled) {
     const match = regexes.map((r) => r.exec(text)).find((m) => m !== null);
-    if (match) flags.push({ id: flag.id, label: flag.label, weight: flag.weight, evidence: match[0] });
+    if (match) flags.push({ id: flag.id, label: flag.label, lesson: flag.lesson, weight: flag.weight, evidence: match[0] });
   }
   return flags;
 }

@@ -51,21 +51,28 @@ export class GuardianConnection {
 
   async callTool(name: string, args: Record<string, unknown>): Promise<ToolOutcome> {
     try {
-      const raw = await (await this.ready()).callTool({ name, arguments: args });
-      const text = (raw.content as Array<{ type: string; text?: string }>)
-        .filter((c) => c.type === "text")
-        .map((c) => c.text)
-        .join("\n");
-      return { isError: Boolean(raw.isError), text, structuredContent: raw.structuredContent as Record<string, unknown>, raw };
-    } catch (err) {
+      return await this.callOnce(name, args);
+    } catch {
+      // The client validates results against the tool schemas it listed at connect time. After Guardian restarts
+      // or is redeployed with new schemas, that cache is stale: reconnect (re-list tools) and retry once.
       this.client = null;
-      throw err;
+      this.uiCache.clear();
+      return this.callOnce(name, args);
     }
+  }
+
+  private async callOnce(name: string, args: Record<string, unknown>): Promise<ToolOutcome> {
+    const raw = await (await this.ready()).callTool({ name, arguments: args });
+    const text = (raw.content as Array<{ type: string; text?: string }>)
+      .filter((c) => c.type === "text")
+      .map((c) => c.text)
+      .join("\n");
+    return { isError: Boolean(raw.isError), text, structuredContent: raw.structuredContent as Record<string, unknown>, raw };
   }
 
   /** Card HTML is static per URI, so it is fetched once and reused for every tool call. */
   async uiResource(uri: string): Promise<string> {
-    const cached = this.uiCache.get(uri);
+    const cached = env.production ? this.uiCache.get(uri) : undefined;
     if (cached) return cached;
     const { contents } = await (await this.ready()).readResource({ uri });
     const html = (contents[0] as { text?: string }).text ?? "";

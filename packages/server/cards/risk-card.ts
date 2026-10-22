@@ -1,9 +1,12 @@
 import { App } from "@modelcontextprotocol/ext-apps";
 import { esc, TYPOLOGY } from "./shared.js";
 
+type Lang = "en" | "hi";
+
 interface Flag {
   id: string;
   label: string;
+  lesson: Record<Lang, string>;
   weight: number;
   evidence: string;
 }
@@ -15,20 +18,45 @@ interface RiskAssessment {
   flags: Flag[];
   recommendedAction: "reassure" | "pause_and_verify" | "end_call_now";
   explanation: string;
+  /** Earlier alerts of the same scam type in the last 7 days. */
+  recentSimilar?: number;
 }
 
-const BAND = {
-  low: { en: "Low risk", hi: "कम खतरा" },
-  medium: { en: "Be careful", hi: "सावधान रहें" },
-  high: { en: "High risk", hi: "ज़्यादा खतरा" },
-  critical: { en: "Scam alert", hi: "धोखे का खतरा" },
+const T = {
+  en: {
+    band: { low: "Low risk", medium: "Be careful", high: "High risk", critical: "Scam alert" },
+    action: {
+      reassure: "Looks safe",
+      pause_and_verify: "Pause. Check with family first.",
+      end_call_now: "End the call now. Don't pay.",
+    },
+    why: "Why this is a scam",
+    heard: "You heard",
+    safe: "Nothing here matches a known scam.",
+    repeat: (n: number) => `${ordinalEn(n)} call like this this week`,
+  },
+  hi: {
+    band: { low: "कम खतरा", medium: "सावधान रहें", high: "ज़्यादा खतरा", critical: "धोखे का खतरा" },
+    action: {
+      reassure: "सब ठीक लगता है",
+      pause_and_verify: "रुकिए, पहले परिवार से पूछिए",
+      end_call_now: "अभी कॉल काटें, पैसे न भेजें",
+    },
+    why: "यह धोखा क्यों है",
+    heard: "आपने सुना",
+    safe: "इसमें धोखे का कोई जाना-पहचाना संकेत नहीं है।",
+    repeat: (n: number) => `इस हफ़्ते ऐसी ${ordinalHi(n)} कॉल`,
+  },
 };
 
-const ACTION = {
-  reassure: { en: "Looks safe", hi: "सब ठीक लगता है" },
-  pause_and_verify: { en: "Pause. Check with family first.", hi: "रुकिए, पहले परिवार से पूछिए" },
-  end_call_now: { en: "End the call now. Don't pay.", hi: "अभी कॉल काटें, पैसे न भेजें" },
-};
+function ordinalEn(n: number): string {
+  const suffix = n % 100 >= 11 && n % 100 <= 13 ? "th" : ({ 1: "st", 2: "nd", 3: "rd" } as Record<number, string>)[n % 10] ?? "th";
+  return `${n}${suffix}`;
+}
+
+function ordinalHi(n: number): string {
+  return ({ 2: "दूसरी", 3: "तीसरी", 4: "चौथी" } as Record<number, string>)[n] ?? `${n}वीं`;
+}
 
 const CSS_STYLE = `
 .dial { flex: none; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: .6rem; width: 15rem; }
@@ -37,31 +65,29 @@ const CSS_STYLE = `
 .dial .value { stroke: var(--tone); transition: stroke-dashoffset .8s ease-out; }
 .dial text { font-family: var(--font); fill: var(--ink); }
 .band { font-size: 1.5rem; font-weight: 800; color: var(--tone); text-align: center; line-height: 1.2; }
-.band .hi { display: block; font-size: 1.1rem; }
-.body { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 1rem; }
+.body { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: .9rem; }
 .typology { font-size: 2rem; font-weight: 800; line-height: 1.15; }
-.typology .hi { display: block; font-size: 1.35rem; color: var(--muted); }
-.explanation { font-size: 1.1rem; }
-.flags { background: var(--card); border: 1px solid var(--line); border-radius: .8rem; }
-.flags li { display: flex; justify-content: space-between; gap: 1rem; padding: .55rem .9rem; font-size: 1rem; }
-.flags li + li { border-top: 1px solid var(--line); }
-.flags q { font-weight: 700; quotes: "“" "”"; }
-.flags .weight { color: var(--muted); white-space: nowrap; }
+.repeat { align-self: flex-start; background: var(--tone); color: #fff; font-weight: 700; font-size: 1rem; border-radius: 999px; padding: .25rem .8rem; }
+.why { font-size: 1.05rem; font-weight: 800; color: var(--muted); text-transform: uppercase; letter-spacing: .04em; }
+.lessons { display: flex; flex-direction: column; gap: .7rem; }
+.lessons li { border-left: .3rem solid var(--tone); padding-left: .8rem; }
+.lessons p { font-size: 1.15rem; line-height: 1.35; }
+.lessons .heard { display: block; margin-top: .15rem; font-size: .9rem; color: var(--muted); }
+.safe { font-size: 1.2rem; }
 .action { margin-top: auto; border-radius: .8rem; padding: .9rem 1.2rem; background: var(--tone); color: #fff; font-size: 1.35rem; font-weight: 800; }
-.action .hi { display: block; font-size: 1.1rem; }
-/* Hosts often give the card a slot, not the whole screen: stack it and keep only the top three reasons. */
+/* Hosts often give the card a slot, not the whole screen: stack it and keep the top reasons. */
 @media (max-width: 760px) {
-  .card { flex-direction: column; gap: .8rem; padding: 1rem 1.1rem; }
+  .card { flex-direction: column; gap: .7rem; padding: 1rem 1.1rem; }
   .dial { flex-direction: row; width: auto; gap: 1rem; justify-content: flex-start; }
-  .dial svg { width: 6.5rem; }
+  .dial svg { width: 5.5rem; }
   .band { text-align: left; }
-  .typology { font-size: 1.6rem; }
-  .explanation { display: none; }
-  .typology .hi { margin-top: .2rem; }
+  .typology { font-size: 1.5rem; }
+  .lessons p { font-size: 1.05rem; }
+  .lessons li:nth-child(n + 3) { display: none; }
+  .action { font-size: 1.15rem; padding: .7rem 1rem; }
 }
 @media (max-width: 760px) and (max-height: 440px) {
-  .flags li:nth-child(n + 4) { display: none; }
-  .action { font-size: 1.2rem; padding: .7rem 1rem; }
+  .lessons li:nth-child(n + 2) { display: none; }
 }
 `;
 
@@ -78,21 +104,24 @@ function dial(score: number): string {
   </svg>`;
 }
 
-function render(root: HTMLElement, r: RiskAssessment): void {
-  const typology = TYPOLOGY[r.typology] ?? TYPOLOGY.none!;
-  // Show the strongest five; every flag carries the exact phrase that triggered it.
-  const flags = r.flags.slice(0, 5).map((f) =>
-    `<li><span>${esc(f.label)}: <q>${esc(f.evidence)}</q></span><span class="weight">+${f.weight}</span></li>`).join("");
+function render(root: HTMLElement, r: RiskAssessment, lang: Lang): void {
+  const t = T[lang];
+  const typology = (TYPOLOGY[r.typology] ?? TYPOLOGY.none!)[lang];
+  // Strongest reasons first; each lesson is paired with the exact phrase that triggered it.
+  const lessons = r.flags.slice(0, 3).map((f) =>
+    `<li><p>${esc(f.lesson[lang])}</p><span class="heard">${t.heard}: “${esc(f.evidence)}”</span></li>`).join("");
+  const repeat = r.recentSimilar ? `<p class="repeat">${t.repeat(r.recentSimilar + 1)}</p>` : "";
+  root.lang = lang;
   root.className = `card tone-${r.band}`;
   root.innerHTML = `
-    <section class="dial">${dial(r.score)}
-      <p class="band">${BAND[r.band].en}<span class="hi" lang="hi">${BAND[r.band].hi}</span></p>
-    </section>
+    <section class="dial">${dial(r.score)}<p class="band">${t.band[r.band]}</p></section>
     <section class="body">
-      <h1 class="typology">${esc(typology.en)}<span class="hi" lang="hi">${esc(typology.hi)}</span></h1>
-      <p class="explanation">${esc(r.explanation)}</p>
-      ${flags ? `<ul class="flags" aria-label="Why">${flags}</ul>` : ""}
-      <p class="action">${ACTION[r.recommendedAction].en}<span class="hi" lang="hi">${ACTION[r.recommendedAction].hi}</span></p>
+      <h1 class="typology">${esc(typology)}</h1>
+      ${repeat}
+      ${r.band === "low" || !lessons
+        ? `<p class="safe">${t.safe}</p>`
+        : `<h2 class="why">${t.why}</h2><ul class="lessons">${lessons}</ul>`}
+      <p class="action">${t.action[r.recommendedAction]}</p>
     </section>`;
 }
 
@@ -101,9 +130,14 @@ style.textContent = CSS_STYLE;
 document.head.append(style);
 
 const root = document.getElementById("root")!;
+// The card speaks the user's language: Hindi unless the assistant passed an English locale.
+let lang: Lang = "hi";
 const app = new App({ name: "Guardian risk card", version: "0.1.0" });
-// Handlers go on before connect() so the first tool result is never missed.
+// Handlers go on before connect() so the first tool input/result is never missed.
+app.ontoolinput = ({ arguments: args }) => {
+  lang = String(args?.locale ?? "hi-IN").startsWith("en") ? "en" : "hi";
+};
 app.ontoolresult = (result) => {
-  if (result.structuredContent) render(root, result.structuredContent as unknown as RiskAssessment);
+  if (result.structuredContent) render(root, result.structuredContent as unknown as RiskAssessment, lang);
 };
 void app.connect();
