@@ -10,32 +10,20 @@
   <body>
     <main class="phone">
       <header class="top">
-        <div>
-          <h1 class="brand">Guardian</h1>
-          <p class="brand-sub"><span lang="hi">गार्जियन</span> · Dadi's circle</p>
+        <span class="brand">Guardian</span>
+        <div class="lang" role="group" aria-label="Language">
+          <button data-lang="en">EN</button>
+          <button data-lang="hi" lang="hi">हिं</button>
         </div>
-        <div class="avatar" id="viewer-initial" aria-label="Signed in as Rahul">R</div>
       </header>
 
-      <div id="status"></div>
-      <section id="next" hidden></section>
+      <section id="status" aria-live="assertive"></section>
 
-      <section class="section" aria-labelledby="alerts-h">
-        <div class="section-head">
-          <h2 id="alerts-h">Alerts · <span lang="hi">अलर्ट</span></h2>
-          <span class="muted">Summaries only</span>
-        </div>
-        <ul class="list" id="alerts"></ul>
+      <section class="last">
+        <p id="last-alert"></p>
+        <button class="link" id="history-toggle" aria-expanded="false" aria-controls="history"></button>
       </section>
-
-      <section class="section" id="household-section" aria-labelledby="household-h">
-        <div class="section-head">
-          <h2 id="household-h">Household · <span lang="hi">परिवार</span></h2>
-        </div>
-        <ul class="list" id="household"></ul>
-      </section>
-
-      <p class="privacy">Guardian never records calls. You see summaries, not conversations.</p>
+      <ul class="history" id="history" hidden></ul>
     </main>
 
     <nav class="preview" aria-label="Preview state (mock data)">
