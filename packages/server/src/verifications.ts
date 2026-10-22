@@ -19,7 +19,7 @@ export interface VerificationRequest {
 }
 
 // Read per call so tests (and demos) can shorten the wait without restarting the process.
-const timeoutMs = () => Number(process.env.VERIFICATION_TIMEOUT_MS ?? 90_000);
+export const timeoutMs = () => Number(process.env.VERIFICATION_TIMEOUT_MS ?? 90_000);
 
 const requests = new Map<string, VerificationRequest>();
 

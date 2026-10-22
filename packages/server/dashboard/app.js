@@ -1,5 +1,5 @@
 // Rahul's dashboard: one status, one line, one button, readable in 3 seconds at 2 AM.
-// Mock only for now: answers update the local snapshot instead of POSTing to /verifications/:id/respond.
+// Live by default (SSE from /events/stream). `?state=<scenario>` switches to mock data for design previews.
 (() => {
   // Every visible string, per language. Lines stay at 8 words or fewer.
   const T = {
@@ -123,8 +123,15 @@
 
   const attrs = (b) => (b.answer ? `data-answer="${b.answer}" data-id="${esc(b.id)}"` : `data-action="${b.action}"`);
 
+  /** Same rule as the server's withTimeout: a pending request past the timeout reads as no_response. */
+  function effective(v) {
+    const limit = snapshot.verificationTimeoutMs;
+    const expired = v?.status === "pending" && limit && Date.now() - Date.parse(v.createdAt) > limit;
+    return expired ? { ...v, status: "no_response" } : v;
+  }
+
   function renderStatus() {
-    const s = view(latest(snapshot.verifications));
+    const s = view(effective(latest(snapshot.verifications)));
     $("status").dataset.tone = s.tone;
     $("status").innerHTML = `
       <div class="icon" aria-hidden="true">${s.icon}</div>
@@ -136,7 +143,7 @@
   function renderAlerts() {
     const t = T[lang];
     const alerts = [...snapshot.alerts].sort((a, b) => b.createdAt.localeCompare(a.createdAt));
-    const name = (a) => t.typology[a.typology] ?? a.typology ?? "—";
+    const name = (a) => t.typology[a.typology] ?? (lang === "hi" ? "अलर्ट" : "Alert");
     const score = (a) => (a.score == null ? "" : ` · ${a.score}/100`);
     const last = alerts[0];
     $("last-alert").textContent = last ? `${t.lastAlert}: ${name(last)}${score(last)}` : t.noAlerts;
@@ -156,6 +163,8 @@
     renderAlerts();
   }
 
+  const mockMode = new URLSearchParams(location.search).has("state");
+
   function load(scenario) {
     const key = window.GUARDIAN_MOCK[scenario] ? scenario : "safe";
     snapshot = structuredClone(window.GUARDIAN_MOCK[key]);
@@ -163,6 +172,44 @@
     document.querySelectorAll(".preview button").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.scenario === key)));
     history.replaceState(null, "", `?state=${key}`);
     render();
+  }
+
+  function upsert(list, item) {
+    const i = list.findIndex((x) => x.id === item.id);
+    if (i === -1) list.push(item);
+    else list[i] = item;
+  }
+
+  function connectLive() {
+    // EventSource reconnects on its own; every reconnect starts with a fresh snapshot, so no state drifts.
+    const source = new EventSource("../events/stream");
+    source.addEventListener("snapshot", (e) => {
+      snapshot = JSON.parse(e.data);
+      render();
+    });
+    source.addEventListener("alert", (e) => {
+      upsert(snapshot.alerts, JSON.parse(e.data));
+      render();
+    });
+    source.addEventListener("verification", (e) => {
+      upsert(snapshot.verifications, JSON.parse(e.data));
+      render();
+    });
+  }
+
+  async function answer(id, status) {
+    if (mockMode) {
+      const v = snapshot.verifications.find((x) => x.id === id);
+      Object.assign(v, { status, respondedAt: new Date().toISOString() });
+      return render();
+    }
+    // The UI updates from the SSE echo, so the screen only changes once the server has the answer.
+    const res = await fetch(`../verifications/${encodeURIComponent(id)}/respond`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ status }),
+    }).catch(() => null);
+    if (!res?.ok) toast(lang === "hi" ? "जवाब नहीं भेजा जा सका। फिर कोशिश करें।" : "Couldn't send. Please try again.");
   }
 
   let toastTimer;
@@ -186,14 +233,22 @@
       historyOpen = !historyOpen;
       return renderAlerts();
     }
-    if (el.dataset.answer) {
-      const v = snapshot.verifications.find((x) => x.id === el.dataset.id);
-      Object.assign(v, { status: el.dataset.answer, respondedAt: new Date().toISOString() });
-      return render();
-    }
+    if (el.dataset.answer) return answer(el.dataset.id, el.dataset.answer);
     const mock = { "call-dadi": "Mock: would call Dadi", "call-priya": "Mock: would call Priya", report: "Mock: would dial 1930" };
     toast(mock[el.dataset.action] ?? "Mock action");
   });
 
-  load(new URLSearchParams(location.search).get("state") ?? "safe");
+  // Re-render while a request is pending so the screen flips to no_response on time.
+  setInterval(() => {
+    if (snapshot && latest(snapshot.verifications)?.status === "pending") renderStatus();
+  }, 1000);
+
+  if (mockMode) {
+    document.querySelector(".preview").hidden = false;
+    load(new URLSearchParams(location.search).get("state"));
+  } else {
+    snapshot = { alerts: [], verifications: [], household: null };
+    render();
+    connectLive();
+  }
 })();

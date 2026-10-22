@@ -3,13 +3,19 @@ import { z } from "zod";
 import { subscribe } from "./bus.js";
 import { household } from "./data.js";
 import { listEvents } from "./events.js";
-import { listVerifications, respondToVerification } from "./verifications.js";
+import { listVerifications, respondToVerification, timeoutMs } from "./verifications.js";
 
 const respondBody = z.object({ status: z.enum(["confirmed_safe", "needs_help"]) });
 
 function snapshot() {
   const contacts = household.trustedContacts.map(({ phone: _phone, ...c }) => c);
-  return { alerts: listEvents(), verifications: listVerifications(), household: { persona: household.persona, contacts } };
+  return {
+    alerts: listEvents(),
+    verifications: listVerifications(),
+    household: { persona: household.persona, contacts },
+    // Lets the dashboard flip pending → no_response itself; the server emits no event when time runs out.
+    verificationTimeoutMs: timeoutMs(),
+  };
 }
 
 /** HTTP API for the family dashboard (Rahul's phone). Summaries only; transcripts never reach this layer. */

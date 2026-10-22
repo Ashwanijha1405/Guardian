@@ -14,7 +14,8 @@ export interface FamilyEvent {
   score?: number;
 }
 
-const EVENTS_FILE = DATA_DIR + "events.json";
+// Overridable so the test suite never writes into the demo's alert history.
+const EVENTS_FILE = process.env.GUARDIAN_EVENTS_FILE ?? DATA_DIR + "events.json";
 
 // Loaded once at startup so alerts survive a restart; the JSON file is a write-through copy, not a database.
 const events: FamilyEvent[] = existsSync(EVENTS_FILE) ? JSON.parse(readFileSync(EVENTS_FILE, "utf8")) : [];

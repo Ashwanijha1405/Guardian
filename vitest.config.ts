@@ -1,3 +1,5 @@
+import { tmpdir } from "node:os";
+import { join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { defineConfig } from "vitest/config";
 
@@ -9,5 +11,6 @@ export default defineConfig({
   test: {
     include: ["packages/*/test/**/*.test.ts"],
     passWithNoTests: true,
+    env: { GUARDIAN_EVENTS_FILE: join(tmpdir(), "guardian-test-events.json") },
   },
 });
