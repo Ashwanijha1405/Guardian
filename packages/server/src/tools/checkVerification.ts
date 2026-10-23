@@ -17,7 +17,7 @@ const LINES: Record<VerificationStatus, { en: Line; hi: Line }> = {
   },
   confirmed_safe: {
     en: (n, r) => `${n} confirmed everything is fine, so this call is a scam. Please end the call now. You can report it at ${r}.`,
-    hi: (n, r) => `${n} ne bataya ki wo bilkul theek hain aur yeh dhokha hai. Abhi call kaat dijiye. Aap ${r} par shikayat kar sakti hain.`,
+    hi: (n, r) => `${n} ne confirm kiya ki sab theek hai, yeh call dhokha hai. Abhi call kaat dijiye. Aap ${r} par shikayat kar sakti hain.`,
   },
   needs_help: {
     en: (n) => `${n} replied that they do need help. Still, please don't pay this caller. End the call, and ${n} or the family will call you directly.`,
