@@ -94,3 +94,18 @@ summary { cursor: pointer; font-weight: 700; }
 .dev-log .result { color: #1f6b4f; }
 .dev-log .err { color: #b3261e; }
 .dev-log .ui { color: #7a4fb3; }
+
+/* Quiet mode: replies are read, not spoken. */
+.quiet-badge {
+  position: absolute; top: 14px; right: 18px; margin: 0;
+  padding: 4px 12px; border-radius: 999px;
+  background: rgba(255, 255, 255, 0.14); color: #fff; font-size: 14px; font-weight: 600;
+  opacity: 0; transition: opacity 0.2s;
+}
+.screen[data-quiet="true"] .quiet-badge { opacity: 1; }
+.quiet-toggle {
+  border: 2px solid currentColor; background: transparent; border-radius: 999px;
+  padding: 10px 18px; font: inherit; font-weight: 600; cursor: pointer;
+}
+.quiet-toggle[aria-pressed="true"] { background: #1f1b17; border-color: #1f1b17; color: #fff; }
+.mic:disabled { opacity: 0.35; cursor: not-allowed; }

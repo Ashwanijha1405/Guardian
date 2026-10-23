@@ -25,6 +25,8 @@ const mic = $<HTMLButtonElement>("mic");
 
 const history: Array<{ role: "user" | "assistant"; text: string }> = [];
 let busy = false;
+// The "officer" may be watching Dadi on video: in quiet mode she asks by tapping and reads the reply instead of hearing it.
+let quiet = false;
 let speechQueue = Promise.resolve();
 
 const setMode = (mode: Mode) => (screen.dataset.mode = mode);
@@ -46,6 +48,7 @@ function log(kind: string, text: string): void {
 /** Replies are queued so two sentences in one turn are spoken in order, never over each other. */
 function say(text: string): void {
   reply.textContent = text;
+  if (quiet) return;
   speechQueue = speechQueue.then(async () => {
     setMode("speaking");
     await speak(text);
@@ -98,7 +101,7 @@ async function runTurn(text: string): Promise<void> {
     const res = await fetch("/api/turn", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ text, history: history.slice(-8) }),
+      body: JSON.stringify({ text, history: history.slice(-8), quiet }),
     });
     history.push({ role: "user", text });
     await readEvents(res, handle);
@@ -167,6 +170,14 @@ async function showHealth(): Promise<void> {
 }
 
 mic.addEventListener("click", () => void onMic());
+$("quiet").addEventListener("click", () => {
+  quiet = !quiet;
+  $("quiet").setAttribute("aria-pressed", String(quiet));
+  screen.dataset.quiet = String(quiet);
+  // Speaking to Alexa would defeat the point when the caller can hear the room.
+  mic.disabled = quiet;
+  if (quiet) stopSpeaking();
+});
 document.querySelectorAll<HTMLButtonElement>("[data-preset]").forEach((b) =>
   b.addEventListener("click", () => void runTurn(PRESETS[b.dataset.preset!]!)),
 );

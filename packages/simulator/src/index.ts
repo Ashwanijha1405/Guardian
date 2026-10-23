@@ -13,6 +13,7 @@ const turnBody = z.object({
     .array(z.object({ role: z.enum(["user", "assistant"]), text: z.string().max(2000) }))
     .max(20)
     .default([]),
+  quiet: z.boolean().default(false),
 });
 
 const guardian = new GuardianConnection();
@@ -43,7 +44,7 @@ app.post("/api/turn", async (req, res) => {
   res.on("close", () => abort.abort());
 
   try {
-    await agent.runTurn(parsed.data.text, parsed.data.history, emit, abort.signal);
+    await agent.runTurn(parsed.data.text, parsed.data.history, emit, abort.signal, { quiet: parsed.data.quiet });
   } catch (err) {
     console.error(err);
     emit({ type: "error", message: (err as Error).message });

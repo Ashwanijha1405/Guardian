@@ -18,7 +18,13 @@ const SYSTEM = `You are Alexa+, speaking through an Echo Show to an elderly Indi
 - At most 2-3 short sentences. Calm, warm, firm. Never shame or scold her.
 - Follow the Guardian server instructions below exactly. Never invent safety facts, phone numbers or laws: use get_safety_guidance and speak its "say" field.
 - When a tool returns a "say" field, base your reply on it.
+- If a tool result has "already_said_to_user": true, Dadi has already heard that "say" text. Do not repeat it; add only what is new.
 - If nothing is wrong, just answer like a friendly assistant.`;
+
+// Dadi tapped the screen because the "officer" may be watching her on video: she reads, she does not listen.
+const QUIET = `QUIET MODE: Dadi asked by tapping the screen, silently, because the caller may be watching or listening.
+She will READ your reply on screen; it is not spoken. Write in simple Hindi in Devanagari script (English only if her
+message is in English), at most 2 short sentences. Never ask her to say anything out loud.`;
 
 const MAX_STEPS = 8;
 const POLL_EVERY_MS = 3_000;
@@ -38,11 +44,17 @@ function summarize(name: string, outcome: ToolOutcome): string {
 export class Agent {
   constructor(private guardian: GuardianConnection) {}
 
-  async runTurn(text: string, history: HistoryTurn[], emit: (e: TurnEvent) => void, signal: AbortSignal): Promise<void> {
+  async runTurn(
+    text: string,
+    history: HistoryTurn[],
+    emit: (e: TurnEvent) => void,
+    signal: AbortSignal,
+    { quiet = false }: { quiet?: boolean } = {},
+  ): Promise<void> {
     emit({ type: "transcript", text });
     const { tools, instructions } = await this.guardian.describe();
     const session = sessionFactory(env.provider)({
-      system: `${SYSTEM}\n\nGuardian server instructions:\n${instructions}`,
+      system: `${SYSTEM}${quiet ? `\n\n${QUIET}` : ""}\n\nGuardian server instructions:\n${instructions}`,
       tools: tools.map(({ name, description, inputSchema }) => ({ name, description, inputSchema })),
       history,
     });
@@ -89,11 +101,15 @@ export class Agent {
     }
 
     emit({ type: "tool_result", name: call.name, summary: summarize(call.name, outcome), isError: outcome.isError });
+    // Safety facts must reach Dadi verbatim from Guardian's sourced data, so they are said here rather than
+    // left to the model, which sometimes skipped them in testing.
+    const guidance = call.name === "get_safety_guidance" && !outcome.isError ? outcome.structuredContent?.say : undefined;
+    if (typeof guidance === "string" && guidance) emit({ type: "assistant_text", text: guidance });
     const uri = (await this.guardian.describe()).tools.find((t) => t.name === call.name)?.uiResourceUri;
     if (uri && !outcome.isError) {
       emit({ type: "ui_resource", uri, html: await this.guardian.uiResource(uri), toolInput: call.args, toolResult: outcome.raw });
     }
-    const result = outcome.structuredContent ?? { text: outcome.text };
+    const result = { ...(outcome.structuredContent ?? { text: outcome.text }), ...(guidance ? { already_said_to_user: true } : {}) };
     return { id: call.id, name: call.name, result: outcome.isError ? { error: outcome.text } : result };
   }
 }
