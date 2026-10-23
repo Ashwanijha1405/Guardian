@@ -1,4 +1,4 @@
-import { createMcpExpressApp } from "@modelcontextprotocol/express";
+import { createMcpExpressApp, hostHeaderValidation } from "@modelcontextprotocol/express";
 import { NodeStreamableHTTPServerTransport } from "@modelcontextprotocol/node";
 import cors from "cors";
 import express, { type Express } from "express";
@@ -12,10 +12,14 @@ import { createGuardianServer } from "./server.js";
 export interface AppOptions {
   host: string;
   corsOrigin: string;
+  /** Public hostnames allowed to reach /mcp when bound to a non-localhost address (DNS rebinding protection). */
+  allowedHosts?: string[];
 }
 
-export function createApp({ host, corsOrigin }: AppOptions): Express {
+export function createApp({ host, corsOrigin, allowedHosts }: AppOptions): Express {
   const app = createMcpExpressApp({ host });
+  // Only /mcp is host-checked: a platform health check may not send the public Host header, and must not get a 403.
+  if (allowedHosts?.length) app.use("/mcp", hostHeaderValidation(allowedHosts));
   app.use(cors({ origin: corsOrigin.split(","), exposedHeaders: ["Mcp-Session-Id"] }));
 
   app.get("/health", (_req, res) => {

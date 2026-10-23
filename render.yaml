@@ -1,0 +1,43 @@
+# Render Blueprint: two free web services built from this repo.
+# After the first deploy, set GUARDIAN_MCP_URL on the simulator to https://<guardian-server host>/mcp.
+services:
+  - type: web
+    name: guardian-server
+    runtime: node
+    plan: free
+    # TypeScript and Vite are devDependencies; NODE_ENV=production would otherwise make npm skip them.
+    buildCommand: npm ci --include=dev && npm run build
+    startCommand: npm run start -w @guardian/server
+    healthCheckPath: /health
+    envVars:
+      - key: NODE_VERSION
+        value: "22"
+      - key: NODE_ENV
+        value: production
+      # Listen on all interfaces; /mcp is still host-checked against RENDER_EXTERNAL_HOSTNAME (set by Render).
+      - key: HOST
+        value: 0.0.0.0
+
+  - type: web
+    name: guardian-simulator
+    runtime: node
+    plan: free
+    buildCommand: npm ci --include=dev && npm run build
+    startCommand: npm run start -w @guardian/simulator
+    # "/" not "/api/health": the simulator must come up even while the server is still cold-starting.
+    healthCheckPath: /
+    envVars:
+      - key: NODE_VERSION
+        value: "22"
+      - key: NODE_ENV
+        value: production
+      - key: SIMULATOR_PORT
+        value: "10000"
+      - key: LLM_PROVIDER
+        value: gemini
+      - key: GEMINI_MODEL
+        value: gemini-flash-lite-latest
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: GUARDIAN_MCP_URL
+        sync: false
