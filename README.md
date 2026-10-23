@@ -110,7 +110,7 @@ packages/risk-engine   scam typology engine (pure TS) + tests
 packages/server        Guardian MCP server, MCP Apps cards, family dashboard, events API
 packages/simulator     Alexa+ simulator: MCP client + LLM agent backend, Echo Show web UI
 data/                  household.json (persona, contacts), safety-facts.json (facts + source URLs)
-docs/                  friction-log.md, video-script.md
+docs/                  friction-log.md, feedback.md, video-script.md
 ```
 
 ## Dignity and privacy by design
