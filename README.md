@@ -13,7 +13,8 @@ Demo persona: **Dadi**, who lives alone in Lucknow and mixes Hindi, Hinglish and
 lives in Bengaluru and gets the alerts.
 
 > Built for the Amazon "Build, Ship, Shape" hackathon, Alexa+ track.
-> Live demo: simulator `<SIMULATOR_URL>` · family dashboard `<SERVER_URL>/dashboard/` · MCP endpoint `<SERVER_URL>/mcp`
+> Live demo: simulator [guardian-simulator.onrender.com](https://guardian-simulator.onrender.com/) · family dashboard [guardian-server-mt1b.onrender.com/dashboard](https://guardian-server-mt1b.onrender.com/dashboard/) · MCP endpoint `https://guardian-server-mt1b.onrender.com/mcp`
+> (Free hosting: the first request after idle can take up to a minute while the services wake up.)
 
 ## How it works
 
@@ -100,7 +101,7 @@ claude mcp add --transport http guardian http://localhost:3000/mcp   # use Guard
 ```
 
 Deploy: [`render.yaml`](render.yaml) creates both services on Render. Set `GEMINI_API_KEY` and, after the server is
-live, `GUARDIAN_MCP_URL=https://<server>/mcp` on the simulator.
+live, `GUARDIAN_MCP_URL=https://<server>/mcp` on the simulator. Render adds a suffix to the server URL if the name is taken (ours is `guardian-server-mt1b`), so copy the exact URL.
 
 ## Repository
 
