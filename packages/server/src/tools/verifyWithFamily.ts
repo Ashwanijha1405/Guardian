@@ -30,8 +30,9 @@ export function registerVerifyWithFamily(server: McpServer): void {
       if (!contact) {
         return { isError: true, content: [{ type: "text", text: "No trusted contact is configured for this household." }] };
       }
-      const req = createVerification(contact, { reason, claimedPerson: claimed_person, typology });
-      const hindi = (locale ?? household.locale).startsWith("hi");
+      const userLocale = locale ?? household.locale;
+      const req = createVerification(contact, { reason, claimedPerson: claimed_person, typology, locale: userLocale });
+      const hindi = userLocale.startsWith("hi");
       const say = hindi
         ? `Main abhi ${contact.name} se pooch rahi hoon. Tab tak kisi ko paise mat bhejiye, main yahin hoon.`
         : `I'm checking with ${contact.name} right now. Please don't send any money in the meantime. I'm right here with you.`;

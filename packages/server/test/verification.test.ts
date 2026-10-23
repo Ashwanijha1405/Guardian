@@ -63,6 +63,22 @@ describe("family verification loop", () => {
     expect(after.say).toMatch(/1930/);
   });
 
+  it("answers in the request's language and country when the check omits a locale", async () => {
+    const created = await client.callTool({
+      name: "verify_with_family",
+      arguments: { reason: "A caller who sounds like Rahul says he is in jail.", typology: "grandparent_voice_clone", locale: "en-US" },
+    });
+    const id = (created.structuredContent as unknown as VerificationResult).request_id;
+    await respond(id, "confirmed_safe");
+
+    const result = await client.callTool({ name: "check_verification", arguments: { request_id: id } });
+    const after = result.structuredContent as unknown as VerificationResult & { locale: string };
+    expect(after.locale).toBe("en-US");
+    expect(after.say).toMatch(/^Rahul confirmed/);
+    expect(after.say).toMatch(/ic3\.gov/);
+    expect(after.say).not.toMatch(/1930/);
+  });
+
   it("reports needs_help", async () => {
     const req = await verify();
     await respond(req.request_id, "needs_help");

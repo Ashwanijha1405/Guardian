@@ -6,6 +6,8 @@ type Lang = "en" | "hi";
 interface Verification {
   contact_name: string;
   status: "pending" | "confirmed_safe" | "needs_help" | "no_response";
+  /** Resolved by the server from the original request, so it is right even when the tool call omits a locale. */
+  locale?: string;
 }
 
 // One icon and one line per status, in the user's language: Dadi should get it at a glance.
@@ -13,7 +15,7 @@ const STATUS: Record<Verification["status"], { tone: string; icon: string } & Re
   pending: { tone: "slate", icon: "…", en: (n) => `Waiting for ${n}…`, hi: (n) => `${n} के जवाब का इंतज़ार…` },
   confirmed_safe: { tone: "low", icon: "✓", en: (n) => `${n} says: it's a scam`, hi: (n) => `${n} ने बताया: यह धोखा है` },
   needs_help: { tone: "medium", icon: "☎", en: (n) => `${n} will call you now`, hi: (n) => `${n} आपको अभी कॉल करेंगे` },
-  no_response: { tone: "slate", icon: "1930", en: () => "No answer yet. Call 1930.", hi: () => "जवाब नहीं आया। 1930 पर कॉल करें।" },
+  no_response: { tone: "slate", icon: "!", en: () => "No answer yet. Hang up, don't pay.", hi: () => "जवाब नहीं आया। फ़ोन काटें, पैसे न दें।" },
 };
 
 const CSS_STYLE = `
@@ -43,6 +45,9 @@ app.ontoolinput = ({ arguments: args }) => {
   lang = String(args?.locale ?? "hi-IN").startsWith("en") ? "en" : "hi";
 };
 app.ontoolresult = (result) => {
-  if (result.structuredContent) render(root, result.structuredContent as unknown as Verification, lang);
+  const v = result.structuredContent as unknown as Verification | undefined;
+  if (!v) return;
+  if (v.locale) lang = v.locale.startsWith("en") ? "en" : "hi";
+  render(root, v, lang);
 };
 void app.connect();

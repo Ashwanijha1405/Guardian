@@ -13,6 +13,8 @@ export interface VerificationRequest {
   reason: string;
   claimedPerson?: string;
   typology?: string;
+  /** Language of the conversation that raised the request, so later checks answer in the same language. */
+  locale?: string;
   status: VerificationStatus;
   createdAt: string;
   respondedAt?: string;
@@ -31,7 +33,7 @@ function withTimeout(req: VerificationRequest): VerificationRequest {
 
 export function createVerification(
   contact: Contact,
-  input: { reason: string; claimedPerson?: string; typology?: string },
+  input: { reason: string; claimedPerson?: string; typology?: string; locale?: string },
 ): VerificationRequest {
   const req: VerificationRequest = {
     id: randomUUID(),
