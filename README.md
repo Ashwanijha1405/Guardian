@@ -94,7 +94,7 @@ Open the simulator and Rahul's dashboard side by side, then use the **Digital ar
 Other commands:
 
 ```sh
-npm test                            # 63 tests: 43 risk engine, 20 server (MCP over Streamable HTTP)
+npm test                            # 65 tests: 43 risk engine, 22 server (MCP over Streamable HTTP)
 npm run build
 npm run inspect -w @guardian/server # MCP Inspector; connect to http://localhost:3000/mcp, transport Streamable HTTP
 claude mcp add --transport http guardian http://localhost:3000/mcp   # use Guardian from Claude Code
@@ -132,8 +132,8 @@ docs/                  friction-log.md, feedback.md, video-script.md
   to call the tools: server instructions make this likely, not guaranteed.
 - **No authentication** on `/mcp` or the family respond endpoint, and the family channel is the web dashboard, not
   SMS/WhatsApp. State is in memory plus a JSON file, so it resets on redeploy.
-- **Fact verification is in progress:** facts in `data/safety-facts.json` marked `"verified": false` still need a
-  human check against their source.
+- **Few facts per scam type.** `data/safety-facts.json` keeps only the 12 facts checked against an official source
+  (a test enforces this), so some scam types have just one.
 
 ## What's next
 

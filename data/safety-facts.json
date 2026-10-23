@@ -47,20 +47,6 @@
           "hi": "आरबीआई किसी आम व्यक्ति का खाता नहीं रखता, और कभी किसी को फ़ोन करके पैसे नहीं माँगता।",
           "source": "https://www.rbi.org.in/commonman/english/scripts/PressReleases.aspx?Id=2440",
           "verified": true
-        },
-        {
-          "id": "rbi_never_asks_otp",
-          "en": "No bank or RBI officer will ask for your OTP, PIN or password, or tell you to transfer money to keep it safe.",
-          "hi": "कोई भी बैंक या आरबीआई अधिकारी आपसे ओटीपी, पिन या पासवर्ड नहीं माँगेगा, और न ही पैसे सुरक्षित रखने के लिए दूसरे खाते में भेजने को कहेगा।",
-          "source": "https://sachet.rbi.org.in",
-          "verified": false
-        },
-        {
-          "id": "rbi_frozen_account_scam",
-          "en": "If someone says your account is frozen and you must transfer money to unfreeze it, that is a scam.",
-          "hi": "अगर कोई कहे कि आपका खाता बंद है और उसे खोलने के लिए पैसे भेजने पड़ेंगे, तो वह धोखाधड़ी है।",
-          "source": "https://www.rbi.org.in",
-          "verified": false
         }
       ],
       "nextSteps": [
@@ -81,25 +67,11 @@
     "courier_narcotics": {
       "facts": [
         {
-          "id": "courier_no_fine_calls",
-          "en": "Courier companies and customs officers do not call people to demand a fine for a parcel that contains drugs.",
-          "hi": "कूरियर कंपनियाँ और सीमा शुल्क अधिकारी किसी को फोन करके यह नहीं कहते कि आपके पार्सल में ड्रग्स मिले हैं और जुर्माना देना पड़ेगा।",
-          "source": "https://cybercrime.gov.in",
-          "verified": false
-        },
-        {
           "id": "courier_report_fake_call",
           "en": "You can report a fake parcel or courier call on the cybercrime helpline 1930 or at cybercrime.gov.in.",
           "hi": "नकली पार्सल या कूरियर कॉल की शिकायत आप साइबर हेल्पलाइन 1930 या cybercrime.gov.in पर कर सकते हैं।",
           "source": "https://cybercrime.gov.in",
           "verified": true
-        },
-        {
-          "id": "courier_no_upi_payment",
-          "en": "Customs and police never ask for payment by video call, UPI or gift card to release a parcel.",
-          "hi": "सीमा शुल्क विभाग और पुलिस पार्सल छुड़ाने के लिए वीडियो कॉल, यूपीआई या गिफ्ट कार्ड से पैसे नहीं माँगते।",
-          "source": "https://cybercrime.gov.in",
-          "verified": false
         }
       ],
       "nextSteps": [
@@ -204,29 +176,7 @@
     }
   },
   "general": {
-    "facts": [
-      {
-        "id": "general_never_share_otp",
-        "en": "Never share your OTP, PIN or password with anyone, even someone who says they are from the bank.",
-        "hi": "अपना ओटीपी, पिन या पासवर्ड किसी से न साझा करें, चाहे वह खुद को बैंक से बताए।",
-        "source": "https://cybercrime.gov.in",
-        "verified": false
-      },
-      {
-        "id": "general_okay_to_hang_up",
-        "en": "It is okay to hang up on a call that feels wrong. You are not being rude.",
-        "hi": "जो कॉल ठीक न लगे उसे काट देना बिल्कुल ठीक है। इसमें कोई बुरी बात नहीं है।",
-        "source": "https://cybercrime.gov.in",
-        "verified": false
-      },
-      {
-        "id": "general_talk_before_paying",
-        "en": "Talk to a family member before you pay anyone or move money.",
-        "hi": "किसी को पैसे देने या पैसे भेजने से पहले परिवार के किसी सदस्य से बात करें।",
-        "source": "https://cybercrime.gov.in",
-        "verified": false
-      }
-    ],
+    "facts": [],
     "nextSteps": [
       {
         "en": "Hang up and take a slow breath.",
