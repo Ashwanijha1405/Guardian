@@ -152,7 +152,8 @@
     $("history-toggle").setAttribute("aria-expanded", String(historyOpen));
     $("history").hidden = !historyOpen;
     $("history").innerHTML = alerts
-      .map((a) => `<li><span>${esc(name(a))}${score(a)}</span><time datetime="${a.createdAt}">${when(a.createdAt)}</time></li>`)
+      // The one-line summary is what makes an alert explainable; it is written by the assistant, never a transcript.
+      .map((a) => `<li><div><span>${esc(name(a))}${score(a)}</span>${a.summary ? `<p class="summary">${esc(a.summary)}</p>` : ""}</div><time datetime="${a.createdAt}">${when(a.createdAt)}</time></li>`)
       .join("");
   }
 

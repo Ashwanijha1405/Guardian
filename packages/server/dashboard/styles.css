@@ -71,6 +71,7 @@ button:focus-visible { outline: 3px solid #f2b705; outline-offset: 3px; }
 .history li { display: flex; justify-content: space-between; gap: 12px; padding: 12px 14px; font-size: 15px; }
 .history li + li { border-top: 1px solid var(--line); }
 .history time { color: var(--muted); white-space: nowrap; }
+.history .summary { margin: 4px 0 0; color: var(--muted); font-size: 14px; line-height: 1.35; }
 
 /* Mock preview switcher — not part of the product UI */
 .preview {

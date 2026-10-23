@@ -10,6 +10,6 @@ try {
 export const env = {
   port: Number(process.env.SIMULATOR_PORT ?? 5173),
   guardianMcpUrl: process.env.GUARDIAN_MCP_URL ?? "http://localhost:3000/mcp",
-  provider: (process.env.LLM_PROVIDER ?? "gemini") as "gemini" | "anthropic" | "openai",
+  provider: (process.env.LLM_PROVIDER ?? "gemini") as "gemini" | "anthropic",
   production: process.env.NODE_ENV === "production",
 };
