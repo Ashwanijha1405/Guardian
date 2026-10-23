@@ -206,4 +206,19 @@ export const extraCases: Case[] = [
     maxBand: "low",
     scam: false,
   },
+  {
+    name: "grandparent-pota-paise-chahiye-hinglish",
+    text: "Phone pe koi keh raha hai ki mera pota jail mein hai aur use turant paise chahiye, kisi ko mat batana",
+    locale: "hi-IN",
+    minBand: "high",
+    typology: "grandparent_voice_clone",
+    scam: true,
+  },
+  {
+    name: "benign-paise-chahiye-groceries",
+    text: "Mujhe sabzi ke liye thode paise chahiye, Rahul se baad mein bolungi",
+    locale: "hi-IN",
+    maxBand: "low",
+    scam: false,
+  },
 ];
