@@ -4,17 +4,17 @@
       "facts": [
         {
           "id": "digital_arrest_not_a_law",
-          "en": "There is no such thing as a \"digital arrest\" in Indian law, and real police, CBI or ED officers never question or arrest anyone over a video call.",
-          "hi": "भारतीय कानून में \"डिजिटल अरेस्ट\" जैसी कोई चीज़ नहीं है, और असली पुलिस, सीबीआई या ईडी कभी वीडियो कॉल पर पूछताछ या गिरफ्तारी नहीं करते।",
-          "source": "https://i4c.mha.gov.in",
-          "verified": false
+          "en": "There is no such thing as a \"digital arrest\" in Indian law, and no investigative agency questions anyone over a phone or video call.",
+          "hi": "भारतीय कानून में \"डिजिटल अरेस्ट\" जैसी कोई चीज़ नहीं है, और कोई भी जाँच एजेंसी फ़ोन या वीडियो कॉल पर पूछताछ नहीं करती।",
+          "source": "https://www.pmindia.gov.in/en/news_updates/pms-address-in-the-115th-episode-of-mann-ki-baat/",
+          "verified": true
         },
         {
           "id": "digital_arrest_no_secret_payment",
-          "en": "A government officer will never ask you to pay money or keep a case secret to prove you are innocent.",
-          "hi": "कोई सरकारी अधिकारी आपसे पैसे नहीं माँगेगा और न ही यह कहेगा कि बेगुनाह साबित करने के लिए मामला गुप्त रखें।",
-          "source": "https://pib.gov.in",
-          "verified": false
+          "en": "No government agency threatens you on the phone or asks for money on a video call.",
+          "hi": "कोई भी सरकारी एजेंसी फ़ोन पर धमकी नहीं देती और न ही वीडियो कॉल पर पैसे माँगती है।",
+          "source": "https://www.pmindia.gov.in/en/news_updates/pms-address-in-the-115th-episode-of-mann-ki-baat/",
+          "verified": true
         },
         {
           "id": "digital_arrest_report_1930",
@@ -43,10 +43,10 @@
       "facts": [
         {
           "id": "rbi_no_safe_account",
-          "en": "The RBI does not hold money for individual people and never asks you to move your savings into a \"safe account\".",
-          "hi": "आरबीआई किसी व्यक्ति के पैसे अपने पास नहीं रखता और कभी नहीं कहता कि अपनी बचत किसी \"सुरक्षित खाते\" में डाल दें।",
-          "source": "https://www.rbi.org.in",
-          "verified": false
+          "en": "The RBI does not hold accounts for individual people, and never calls anyone asking for money.",
+          "hi": "आरबीआई किसी आम व्यक्ति का खाता नहीं रखता, और कभी किसी को फ़ोन करके पैसे नहीं माँगता।",
+          "source": "https://www.rbi.org.in/commonman/english/scripts/PressReleases.aspx?Id=2440",
+          "verified": true
         },
         {
           "id": "rbi_never_asks_otp",
@@ -123,22 +123,22 @@
           "id": "voice_clone_ai_possible",
           "en": "Scammers can use AI to copy a family member's voice and sound exactly like them.",
           "hi": "ठग एआई की मदद से परिवार के किसी सदस्य की आवाज़ की नकल कर सकते हैं और बिल्कुल उन्हीं जैसे सुनाई दे सकते हैं।",
-          "source": "https://consumer.ftc.gov",
-          "verified": false
+          "source": "https://consumer.ftc.gov/consumer-alerts/2023/03/scammers-use-ai-enhance-their-family-emergency-schemes",
+          "verified": true
         },
         {
           "id": "voice_clone_call_back",
           "en": "If a call sounds like a grandchild in trouble, hang up and call that person back on a number you already know.",
           "hi": "अगर फोन पर पोता या पोती मुसीबत में होने जैसा लगे, तो फोन काटें और उसी व्यक्ति को उनके पुराने, जाने-पहचाने नंबर पर वापस कॉल करें।",
-          "source": "https://www.fbi.gov",
-          "verified": false
+          "source": "https://consumer.ftc.gov/consumer-alerts/2023/03/scammers-use-ai-enhance-their-family-emergency-schemes",
+          "verified": true
         },
         {
           "id": "voice_clone_family_code",
           "en": "Agree a family code word that only your family knows, and ask for it on any urgent call.",
           "hi": "परिवार में एक गुप्त कोड शब्द तय करें जो सिर्फ़ आपके परिवार को पता हो, और किसी भी ज़रूरी कॉल पर वह कोड शब्द पूछें।",
-          "source": "https://www.fbi.gov",
-          "verified": false
+          "source": "https://www.ic3.gov/PSA/2024/PSA241203",
+          "verified": true
         },
         {
           "id": "voice_clone_report_ic3",
@@ -167,10 +167,10 @@
       "facts": [
         {
           "id": "irs_no_phone_payment",
-          "en": "The IRS does not call to demand immediate payment, gift cards or wire transfers, and does not threaten arrest.",
-          "hi": "आईआरएस फोन करके तुरंत पैसे, गिफ्ट कार्ड या बैंक ट्रांसफर नहीं माँगता, और गिरफ्तारी की धमकी नहीं देता।",
-          "source": "https://www.irs.gov",
-          "verified": false
+          "en": "The IRS does not call to demand immediate payment by gift card or prepaid debit card, and does not threaten to have you arrested.",
+          "hi": "आईआरएस फोन करके गिफ्ट कार्ड या प्रीपेड कार्ड से तुरंत पैसे नहीं माँगता, और गिरफ्तार करवाने की धमकी नहीं देता।",
+          "source": "https://www.irs.gov/newsroom/how-taxpayers-can-protect-themselves-from-gift-card-scams",
+          "verified": true
         },
         {
           "id": "irs_report_tax_scam",
